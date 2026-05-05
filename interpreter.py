@@ -122,11 +122,19 @@ class Lexer:
                 print(f"Lexical error: Unexpected character '{value}' at {line_num}:{column}", file=sys.stderr)
                 sys.exit(1)
             else:
-                # Construct token with position data for precise error reporting
+                # Update line and column before creating the token
+                val_text = mo.group(0)
                 if kind == 'NUMBER': value = int(value)
                 elif kind == 'BOOL': value = (value == 'true')
                 elif kind == 'STRING': value = self.unescape_string(value[1:-1])
                 tokens.append(Token(kind, value, line_num, column))
+                
+                # Count newlines in the matched text to keep line_num synchronized
+                newlines_in_val = val_text.count('\n')
+                if newlines_in_val > 0:
+                    line_num += newlines_in_val
+                    line_start = pos + val_text.rfind('\n') + 1
+                
                 pos = mo.end()
         return tokens
 
