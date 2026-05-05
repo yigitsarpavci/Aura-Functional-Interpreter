@@ -1,0 +1,29 @@
+(* 
+   higher_order.txt
+   Demonstrates higher-order functions and list operations.
+   The 'map' function applies another function to every element in a list.
+   
+   Expected Output:
+   [2, 4, 6]
+   3
+   [1, 2, 3, 4]
+*)
+
+let map = fun (f, l) ->
+    let res = [];
+    let i = 0;
+    while i < length(l) do
+        append(res, f(l[i]));
+        i = i + 1;
+    end;
+    res
+end;
+
+let double = fun (n) -> n * 2 end;
+let my_list = [1, 2, 3];
+
+print(map(double, my_list));
+print(length(my_list));
+
+append(my_list, 4);
+print(my_list);

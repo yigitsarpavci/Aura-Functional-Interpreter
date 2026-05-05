@@ -1,0 +1,27 @@
+(* 
+   recursion.txt
+   Demonstrates recursive function calls and while loops.
+   The program computes the factorial of 5 using recursion 
+   and also sums numbers 1 to 5 using a while loop.
+   
+   Expected Output:
+   120
+   15
+*)
+
+let fact = fun (n) ->
+    if n == 0 then 1
+    else n * fact(n - 1)
+    end
+end;
+
+print(fact(5));
+
+let sum = 0;
+let i = 1;
+while i <= 5 do
+    sum = sum + i;
+    i = i + 1;
+end;
+
+print(sum);

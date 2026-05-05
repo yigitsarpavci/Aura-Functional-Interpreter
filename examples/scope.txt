@@ -1,0 +1,20 @@
+(* 
+   scope.txt
+   Demonstrates the difference between static (lexical) and dynamic scoping.
+   
+   Expected Output with --scope static:
+   10
+   
+   Expected Output with --scope dynamic:
+   20
+*)
+
+let x = 10;
+let f = fun () -> x end;
+
+let g = fun () ->
+    let x = 20;
+    f()
+end;
+
+print(g());
