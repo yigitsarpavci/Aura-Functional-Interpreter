@@ -461,13 +461,14 @@ class Environment:
         """Adds a new binding to the current frame."""
         self.bindings[name] = value
 
-    def lookup(self, name):
+    def lookup(self, name, node=None):
         """Recursively looks up a variable name in the current and parent frames."""
         if name in self.bindings:
             return self.bindings[name]
         if self.parent:
-            return self.parent.lookup(name)
-        print(f"Runtime error: Unbound variable '{name}'", file=sys.stderr)
+            return self.parent.lookup(name, node)
+        loc = f" at {node.line}:{node.col}" if node else ""
+        print(f"Runtime error{loc}: Unbound variable '{name}'", file=sys.stderr)
         sys.exit(1)
 
     def update(self, name, value, node=None):
@@ -491,10 +492,7 @@ class Evaluator:
         if isinstance(node, Literal):
             return node.value
         elif isinstance(node, Var):
-            try:
-                return env.lookup(node.name)
-            except SystemExit:
-                self.error(f"Runtime error: Unbound variable '{node.name}'", node)
+            return env.lookup(node.name, node)
         elif isinstance(node, UnaryOp):
             val = self.eval(node.expr, env)
             if node.op == 'not':
@@ -538,7 +536,10 @@ class Evaluator:
                     self.error(f"Type error: '/' expects integers, got {type(left).__name__} and {type(right).__name__}", node)
                 if right == 0: self.error("Runtime error: division by zero", node)
                 # Perform integer division with truncation towards zero (C-style)
-                return int(left / right)
+                if (left < 0) ^ (right < 0): # Different signs
+                    return -(-left // right)
+                else:
+                    return left // right
             elif node.op == '==': return left == right
             elif node.op == '!=': return left != right
             elif node.op == '<':
