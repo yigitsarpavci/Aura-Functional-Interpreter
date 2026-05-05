@@ -237,10 +237,10 @@ class Parser:
     def consume(self, expected_type=None):
         token = self.peek()
         if not token:
-            print("Parser error: Unexpected end of input", file=sys.stderr)
+            print("Syntax error: Unexpected end of input", file=sys.stderr)
             sys.exit(1)
         if expected_type and token.type != expected_type:
-            print(f"Parser error: Expected {expected_type}, got {token.type} at {token.line}:{token.column}", file=sys.stderr)
+            print(f"Syntax error at {token.line}:{token.column}: Expected {expected_type}, got {token.type} ({token.value})", file=sys.stderr)
             sys.exit(1)
         self.pos += 1
         return token
