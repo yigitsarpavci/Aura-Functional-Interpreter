@@ -1,0 +1,25 @@
+(* 
+   basics.txt
+   Demonstrates basic language features including variables, 
+   arithmetic, comparisons, and strings.
+   
+   Expected Output:
+   30
+   true
+   "Hello World"
+   5
+*)
+
+let x = 10;
+let y = 20;
+print(x + y);
+
+let is_greater = x < y;
+print(is_greater);
+
+let s1 = "Hello ";
+let s2 = "World";
+print(s1 + s2);
+
+let msg = "apple";
+print(length(msg));

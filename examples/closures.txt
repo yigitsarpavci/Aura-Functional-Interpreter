@@ -1,0 +1,26 @@
+(* 
+   closures.txt
+   Demonstrates lexical closures and environment management.
+   The function 'make_counter' returns a closure that increments
+   a variable in its captured environment.
+   
+   Expected Output:
+   1
+   2
+   10
+*)
+
+let make_counter = fun (init) ->
+    let count = init;
+    fun () ->
+        count = count + 1;
+        count
+    end
+end;
+
+let c1 = make_counter(0);
+print(c1());
+print(c1());
+
+let c2 = make_counter(9);
+print(c2());
