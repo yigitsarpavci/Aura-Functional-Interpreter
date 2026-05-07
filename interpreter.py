@@ -48,6 +48,8 @@ class Lexer:
         ('AND',      r'and\b'),               # Logical keywords
         ('OR',       r'or\b'),
         ('NOT',      r'not\b'),
+        ('LENGTH',   r'length\b'),
+        ('APPEND',   r'append\b'),
         ('ID',       r'[a-zA-Z_][a-zA-Z0-9_]*'), # Identifiers
         ('ARROW',    r'->'),                  # Operators and punctuation (Longer first!)
         ('EQ',       r'=='),
@@ -450,8 +452,11 @@ class Parser:
             self.consume('END')
             return FunExpr(params, body, fun_tok.line, fun_tok.column)
         
-        tok = self.consume('ID')
-        return Var(tok.value, tok.line, tok.column)
+        tok = self.match('ID', 'LENGTH', 'APPEND')
+        if tok:
+            return Var(tok.value, tok.line, tok.column)
+        
+        self.consume('ID') # Trigger error if none matched
 
 # --- Runtime Classes ---
 
