@@ -1,0 +1,9 @@
+(* Test 04: Variable declaration and assignment *)
+let x = 10;
+print(x);
+let y = x + 5;
+print(y);
+x = x + 1;
+print(x);
+let z = x * y;
+print(z);

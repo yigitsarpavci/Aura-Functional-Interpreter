@@ -1,0 +1,4 @@
+(* B3: index with a computed expression *)
+let xs = [10, 20, 30, 40, 50];
+print(xs[1] + xs[3]);
+print(xs[length(xs) - 1]);

@@ -1,0 +1,4 @@
+(* B1: escape sequences \t \n \" \\ *)
+print("a\tb");
+print("quote: \"x\"");
+print("back\\slash");

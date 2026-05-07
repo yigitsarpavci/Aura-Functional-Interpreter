@@ -1,0 +1,6 @@
+(* B3: list literal, indexing, length *)
+let xs = [1, 2, 3];
+print(xs);
+print(xs[0]);
+print(xs[2]);
+print(length(xs));

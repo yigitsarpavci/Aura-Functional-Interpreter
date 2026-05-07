@@ -1,0 +1,7 @@
+(* B3: append onto an empty list, then check length *)
+let xs = [];
+append(xs, 1);
+append(xs, 2);
+append(xs, 3);
+print(xs);
+print(length(xs));

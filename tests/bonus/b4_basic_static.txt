@@ -1,0 +1,10 @@
+(* B4: classic static-vs-dynamic example.
+   Under static scoping, f() resolves x in its defining environment (top-level x = 1).
+   Under dynamic scoping, f() resolves x in g's frame (x = 100). *)
+let x = 1;
+let f = fun() -> x end;
+let g = fun() ->
+    let x = 100;
+    f()
+end;
+print(g());

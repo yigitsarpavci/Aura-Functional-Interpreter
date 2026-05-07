@@ -1,0 +1,14 @@
+(* Test 07: Recursion *)
+let factorial = fun(n) ->
+    if n <= 1 then 1
+    else n * factorial(n - 1) end
+end;
+print(factorial(1));
+print(factorial(5));
+print(factorial(10));
+
+let sum_to = fun(n) ->
+    if n == 0 then 0
+    else n + sum_to(n - 1) end
+end;
+print(sum_to(10));

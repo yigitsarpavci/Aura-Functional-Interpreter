@@ -1,0 +1,22 @@
+(* Test 10: Combined features -- scope, mutation through closures *)
+let make_counter = fun(start) ->
+    let count = start;
+    fun() ->
+        count = count + 1;
+        count
+    end
+end;
+
+let c1 = make_counter(0);
+let c2 = make_counter(10);
+print(c1());
+print(c1());
+print(c2());
+print(c1());
+print(c2());
+
+(* Closure captures defining environment *)
+let x = 100;
+let get_x = fun() -> x end;
+x = 200;
+print(get_x());
