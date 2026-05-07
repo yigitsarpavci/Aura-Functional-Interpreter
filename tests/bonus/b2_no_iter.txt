@@ -1,0 +1,7 @@
+(* B2: a while whose condition is false from the start does not execute *)
+let i = 10;
+while i < 0 do
+    print(999);
+    i = i - 1
+end;
+print(i);

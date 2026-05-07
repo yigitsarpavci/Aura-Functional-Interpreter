@@ -1,0 +1,14 @@
+(* Test 09: Higher-order functions *)
+let apply = fun(f, x) -> f(x) end;
+let double = fun(x) -> x * 2 end;
+let negate = fun(x) -> 0 - x end;
+
+print(apply(double, 5));
+print(apply(negate, 3));
+print(apply(double, apply(negate, 4)));
+
+let compose = fun(f, g) ->
+    fun(x) -> f(g(x)) end
+end;
+let double_then_negate = compose(negate, double);
+print(double_then_negate(7));

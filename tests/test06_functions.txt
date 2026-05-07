@@ -1,0 +1,11 @@
+(* Test 06: Function definition and invocation *)
+let add = fun(a, b) -> a + b end;
+print(add(3, 4));
+print(add(10, 20));
+
+let square = fun(x) -> x * x end;
+print(square(5));
+
+let max = fun(a, b) -> if a > b then a else b end end;
+print(max(3, 7));
+print(max(10, 2));

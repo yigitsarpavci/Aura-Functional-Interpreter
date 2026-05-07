@@ -1,0 +1,3 @@
+(* B1: string concatenation with + *)
+let s = "hello" + ", " + "world";
+print(s);

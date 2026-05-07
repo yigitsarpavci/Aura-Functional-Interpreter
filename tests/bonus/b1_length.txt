@@ -1,0 +1,4 @@
+(* B1: length of strings, including the empty string *)
+let s = "abcdef";
+print(length(s));
+print(length(""));

@@ -1,0 +1,23 @@
+(* Test 1: not precedence vs comparison *)
+(* Current bug: not 1 == 1 evaluated as not(1 == 1) -> False *)
+(* Correct (most languages): (not 1) == 1 -> Type Error (not expects bool) *)
+(* Let's test with booleans to see behavior *)
+print(not true == true);  (* Should be (not true) == true -> false == true -> false *)
+                          (* If bug exists: not (true == true) -> not true -> false (Coincidentally same) *)
+print(not false == true); (* Correct: (not false) == true -> true == true -> true *)
+                          (* If bug exists: not (false == true) -> not false -> true (Still same) *)
+
+(* Let's try something where it differs: or vs and vs comparison *)
+print(true or true and false); (* Correct: true or (true and false) -> true *)
+
+(* Test 2: Multiple assignments *)
+let a = 0;
+let b = 0;
+a = b = 100;
+print(a);
+print(b);
+
+(* Test 3: Circular List Ops *)
+let l = [1, 2];
+append(l, l);
+print(l[2][0]); (* Accessing circular element *)

@@ -1,0 +1,8 @@
+(* B2: sum 0..4 with a while loop *)
+let i = 0;
+let sum = 0;
+while i < 5 do
+    sum = sum + i;
+    i = i + 1
+end;
+print(sum);

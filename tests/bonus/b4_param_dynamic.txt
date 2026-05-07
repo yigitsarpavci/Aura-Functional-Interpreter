@@ -1,0 +1,7 @@
+(* B4: free variable in pickN resolves to top-level n=5 under static,
+   but to outer's parameter n under dynamic. *)
+let n = 5;
+let pickN = fun() -> n + 1 end;
+let outer = fun(n) -> pickN() end;
+print(outer(10));
+print(outer(20));
