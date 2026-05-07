@@ -272,35 +272,24 @@ class Parser:
         stmts = []
         last_expr = None
         while self.peek() and self.peek().type not in ('END', 'ELSE'):
-            # If the next construct is a statement ending with ';', it's a stmt
-            # If it's the last thing in the block and has no ';', it's an expr
-            expr = self.parse_expr()
-            if self.match('SEMI'):
-                if isinstance(expr, (LetStmt, PrintStmt, WhileStmt, AssignStmt)):
-                    stmts.append(expr)
-                else:
-                    # Expr as stmt
-                    stmts.append(expr)
+            tok = self.peek()
+            if tok.type in ('LET', 'PRINT', 'WHILE'):
+                stmt = self.parse_special_statement()
+                self.consume('SEMI') # Statements must be terminated by a semicolon
+                stmts.append(stmt)
             else:
-                last_expr = expr
-                break
+                expr = self.parse_expr()
+                if self.match('SEMI'):
+                    if isinstance(expr, AssignStmt):
+                        stmts.append(expr)
+                    else:
+                        stmts.append(expr)
+                else:
+                    last_expr = expr
+                    break
         return Block(stmts, last_expr)
 
-    # --- Expression Precedence Levels (Low to High) ---
-
-    def parse_expr(self):
-        return self.parse_assignment()
-
-    def parse_assignment(self):
-        """Lowest precedence: variable assignment."""
-        if self.peek() and self.peek().type == 'ID' and self.peek(1) and self.peek(1).type == 'ASSIGN':
-            tok = self.consume('ID')
-            name = tok.value
-            self.consume('ASSIGN')
-            expr = self.parse_assignment() # Right-associative
-            return AssignStmt(name, expr, tok.line, tok.column)
-        
-        # Check for standalone let/print/while which are statements
+    def parse_special_statement(self):
         let_tok = self.match('LET')
         if let_tok:
             name_tok = self.consume('ID')
@@ -324,6 +313,20 @@ class Parser:
             self.consume('END')
             return WhileStmt(cond, body, while_tok.line, while_tok.column)
 
+    # --- Expression Precedence Levels (Low to High) ---
+
+    def parse_expr(self):
+        return self.parse_assignment()
+
+    def parse_assignment(self):
+        """Lowest precedence: variable assignment."""
+        if self.peek() and self.peek().type == 'ID' and self.peek(1) and self.peek(1).type == 'ASSIGN':
+            tok = self.consume('ID')
+            name = tok.value
+            self.consume('ASSIGN')
+            expr = self.parse_assignment() # Right-associative
+            return AssignStmt(name, expr, tok.line, tok.column)
+        
         return self.parse_logic_or()
 
     def parse_logic_or(self):
