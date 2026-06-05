@@ -1,4 +1,5 @@
-# Authors: Yiğit Sarp Avcı (2023400048) & Doğukan Sungu (2023400210)
+# Yiğit Sarp Avcı, 2023400048
+# Mehmet Doğukan Sungu, 2023400210
 import sys
 import re
 import argparse
